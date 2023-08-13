@@ -1,10 +1,14 @@
+" debugm from cht
 function! s:LoadGbufs()
+
+if exists('g:loadedGbufs')
+	finish
+endif
+let g:loadedGbufs = 1
 
 " Visual Search originated by author of Practical Vim
 " https://stackoverflow.com/questions/16783017/search-with-visual-select-in-vim/16783292
 " Visual select the content you want to do search, then press the star key *, Voila !
-xnoremap * :<C-u>call <SID>VSetSearch()<CR>/<C-R>=@/<CR><CR>
-xnoremap # :<C-u>call <SID>VSetSearch()<CR>?<C-R>=@/<CR><CR>
 function! s:VSetSearch()
     let temp = @s
     norm! gv"sy
@@ -15,35 +19,6 @@ endfunction
 " Search And Replace (sar, snr) - [s]ubstitute extension
 " See Plug section 'svermeulen/vim-subversive'
 " '\siwip' - [s]earches for ([i]n) current [w]ord and replaces throughout ([i]n) [p]aragraph
-let g:subversivePromptWithActualCommand=1
-
-" these requires 2nd motion command
-nmap <leader>s <plug>(SubversiveSubstituteRange)
-xmap <leader>s <plug>(SubversiveSubstituteRange)
-" shortcut for \siw without partial matches
-nmap <leader>ss <plug>(SubversiveSubstituteWordRange)
-
-" '\r' - search and [r]eplace partial matched word over [a]ll ([e]ntire) file (buffer)
-" ae comes from vim-textobj-entire. [a]ll [e]ntire?
-" [r]eplace [w]ord without punctuation. [r] is same, just takes longer
-nmap <leader>rr <leader>siwae
-nmap <leader>rw <leader>siwae
-" [r]eplace [a]ll word with punctuation
-nmap <leader>ra <leader>siWae
-" [r]eplace from cursor to [e]nd of word
-nmap <leader>re <leader>seae
-" [r]eplace word in [s]ubroutine
-nmap <leader>rs <leader>ssi{
-" [r]eplace word in [p]aragraph
-nmap <leader>rp <leader>ssip
-
-" confirming each substitution, these require 2nd motion command
-nmap <leader>cs <plug>(SubversiveSubstituteRangeConfirm)
-xmap <leader>cs <plug>(SubversiveSubstituteRangeConfirm)
-nmap <leader>css <plug>(SubversiveSubstituteWordRangeConfirm)
-
-" an example. to delete (needs null register) next 3 words, with confirmation:
-" "_\cs3wae
 
 function! ReplaceVariableNameString()
     let l:wordUnderCursor = expand("<cword>")
@@ -51,8 +26,8 @@ function! ReplaceVariableNameString()
     echo "\r". '%s/\$\<'. l:wordUnderCursor. '\>/\$'. l:replaceWord. '/g'. "\r"
     execute '%s/\$\<'. l:wordUnderCursor. '\>/\$'. l:replaceWord. '/g'
 endfunction
-command! ReplaceVariableNameString call ReplaceVariableNameString()
-nmap <leader>rvs :ReplaceVariableNameString<cr>
+" debugm needed?
+" command! ReplaceVariableNameString call ReplaceVariableNameString()
 
 function! ReplaceVariableNameArray()
     let l:wordUnderCursor = expand("<cword>")
@@ -60,8 +35,8 @@ function! ReplaceVariableNameArray()
     echo "\r". '%s/@\<'. l:wordUnderCursor. '\>/@'. l:replaceWord. '/g'. "\r"
     execute '%s/@\<'. l:wordUnderCursor. '\>/@'. l:replaceWord. '/g'
 endfunction
-command! ReplaceVariableNameArray call ReplaceVariableNameArray()
-nmap <leader>rva :ReplaceVariableNameArray<cr>
+" debugm needed?
+" command! ReplaceVariableNameArray call ReplaceVariableNameArray()
 
 function! ReplaceVariableNameHash()
     let l:wordUnderCursor = expand("<cword>")
@@ -72,8 +47,8 @@ function! ReplaceVariableNameHash()
     execute '%s/\$\<'. l:wordUnderCursor. '\>\({\|->\)/\$'. l:replaceWord. '\1/g'
     execute "normal /". l:wordUnderCursor. "\\|". l:replaceWord."\<cr>"
 endfunction
-command! ReplaceVariableNameHash call ReplaceVariableNameHash()
-nmap <leader>rvh :ReplaceVariableNameHash<cr>
+" debugm needed?
+" command! ReplaceVariableNameHash call ReplaceVariableNameHash()
 
 " *** Search And Replace with Macro Q ***
 "         Multiple Files at a time
@@ -127,10 +102,8 @@ nmap <leader>rvh :ReplaceVariableNameHash<cr>
 function! MacroReplaceQuickFixWithQOneLine()
     cdo execute "normal! @q" | w
 endfunction
-command! Mcrq call MacroReplaceQuickFixWithQOneLine()
-nnoremap <leader>mrq :Mcrq<cr>
-nnoremap <leader>gbufq :Mcrq<cr>
-nnoremap <leader>cdoq :Mcrq<cr>
+" debugm needed?
+" command! Mcrq call MacroReplaceQuickFixWithQOneLine()
 
 " bufdo - Macro Replace with Q - The Buffers List - entire file at a time
 " does not need to mess with the QuickFix List
@@ -139,10 +112,8 @@ nnoremap <leader>cdoq :Mcrq<cr>
 function! MacroReplaceQuickFixWithQEntireFile()
     cfdo execute "normal! @q" | w
 endfunction
-command! Mcfrq call MacroReplaceQuickFixWithQEntireFile()
-" [c]fdo [r]eplace with macro [q]
-nnoremap <leader>crq :Mcfrq<cr>
-nnoremap <leader>cfdoq :Mcfrq<cr>
+" debugm needed?
+" command! Mcfrq call MacroReplaceQuickFixWithQEntireFile()
 
 " Searching only buffer list, to open in Quickfix list
 " Complimentary to brq & crq
@@ -170,9 +141,9 @@ function! VimgrepallSpecific(...)
   exe 'copen'
   " cnext " not sure what this was supposed to do
 endfunction
-command! -nargs=* Gbufs call VimgrepallSpecific(<f-args>)
-command! -nargs=* GrepBuffers call VimgrepallSpecific(<f-args>)
-nnoremap <leader>gbufs :call VimgrepallSpecific()
+" debugm needed?
+" command! -nargs=* Gbufs call VimgrepallSpecific(<f-args>)
+" command! -nargs=* GrepBuffers call VimgrepallSpecific(<f-args>)
 
 " see VimgrepallSpecific for comments
 function! VimgrepallSpecificAndOpenThemAll(...)
@@ -186,9 +157,9 @@ function! VimgrepallSpecificAndOpenThemAll(...)
   endif
   exe 'bufdo vimgrepadd ' . l:search_term . ' % | copen'
 endfunction
-command! -nargs=* Gbufsall call VimgrepallSpecificAndOpenThemAll(<f-args>)
-command! -nargs=* GrepBuffersall call VimgrepallSpecificAndOpenThemAll(<f-args>)
-nnoremap <leader>gbufa :call VimgrepallSpecificAndOpenThemAll()
+" debugm needed?
+" command! -nargs=* Gbufsall call VimgrepallSpecificAndOpenThemAll(<f-args>)
+" command! -nargs=* GrepBuffersall call VimgrepallSpecificAndOpenThemAll(<f-args>)
 
 " Search in all currently opened buffers ...
 " ... for what's under the cursor
@@ -210,7 +181,7 @@ function! GrepBuffersForWordOnCursor (expression)
   exec 'vimgrep/'.a:expression.'/ '.join(BuffersList())
   exec 'copen'
 endfunction
-command! -nargs=+ GrepBufs call GrepBuffersForWordOnCursor(<q-args>)
-nnoremap <leader>gbufc :call GrepBuffersForWordOnCursor("<C-R><C-W>")<CR>
+" debugm needed?
+" command! -nargs=+ GrepBufs call GrepBuffersForWordOnCursor(<q-args>)
 
 endfunction
