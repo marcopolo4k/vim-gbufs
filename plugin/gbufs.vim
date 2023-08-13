@@ -1,6 +1,3 @@
-" debugm from cht
-function! s:LoadGbufs()
-
 if exists('g:loadedGbufs')
 	finish
 endif
@@ -183,5 +180,3 @@ function! GrepBuffersForWordOnCursor (expression)
 endfunction
 " debugm needed?
 " command! -nargs=+ GrepBufs call GrepBuffersForWordOnCursor(<q-args>)
-
-endfunction
