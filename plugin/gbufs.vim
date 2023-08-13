@@ -3,46 +3,8 @@ if exists('g:loadedGbufs')
 endif
 let g:loadedGbufs = 1
 
-" Search And Replace (sar, snr) - [s]ubstitute extension
-" See Plug section 'svermeulen/vim-subversive'
-" '\siwip' - [s]earches for ([i]n) current [w]ord and replaces throughout ([i]n) [p]aragraph
-
-function! ReplaceVariableNameString()
-    let l:wordUnderCursor = expand("<cword>")
-    let l:replaceWord = input('Replace variable [$'. l:wordUnderCursor. '] with: $')
-    echo "\r". '%s/\$\<'. l:wordUnderCursor. '\>/\$'. l:replaceWord. '/g'. "\r"
-    execute '%s/\$\<'. l:wordUnderCursor. '\>/\$'. l:replaceWord. '/g'
-endfunction
-" debugm needed?
-" command! ReplaceVariableNameString call ReplaceVariableNameString()
-
-function! ReplaceVariableNameArray()
-    let l:wordUnderCursor = expand("<cword>")
-    let l:replaceWord = input('Replace variable [@'. l:wordUnderCursor. '] with: @')
-    echo "\r". '%s/@\<'. l:wordUnderCursor. '\>/@'. l:replaceWord. '/g'. "\r"
-    execute '%s/@\<'. l:wordUnderCursor. '\>/@'. l:replaceWord. '/g'
-endfunction
-" debugm needed?
-" command! ReplaceVariableNameArray call ReplaceVariableNameArray()
-
-function! ReplaceVariableNameHash()
-    let l:wordUnderCursor = expand("<cword>")
-    let l:replaceWord = input('Replace variable [%'. l:wordUnderCursor. '] with: %')
-    echo "\r". '%s/%\<'. l:wordUnderCursor. '\>/%'. l:replaceWord. '/g'. "\r"
-    execute '%s/%\<'. l:wordUnderCursor. '\>/%'. l:replaceWord. '/g'
-    echo "\r". '%s/\$\<'. l:wordUnderCursor. '\>\({\|->\)/\$'. l:replaceWord. '\1/g'. "\r"
-    execute '%s/\$\<'. l:wordUnderCursor. '\>\({\|->\)/\$'. l:replaceWord. '\1/g'
-    execute "normal /". l:wordUnderCursor. "\\|". l:replaceWord."\<cr>"
-endfunction
-" debugm needed?
-" command! ReplaceVariableNameHash call ReplaceVariableNameHash()
-
 " *** Search And Replace with Macro Q ***
 "         Multiple Files at a time
-
-" cdo - Macro Replace with Q - The QuickFix List - one line at a time
-" macro q doesn't need the % in ':%s/TERM/REPLACE/g'
-" easiest previewing using '/'
 "
 " Quick Instructions
 " 1. load files in buffers
@@ -87,14 +49,27 @@ endfunction
 "       a.) VSetSearch, see https://vi.stackexchange.com/questions/42804/highlight-the-full-text-searched-on-vi-editor/42809#42809
 "       b.) Plug 'dahu/SearchParty' (choose option 2 for the global var)
 "   2. cursor on word, '*' to auto-search, then \gbufs.
+"       * pro: you don't have to cntrl-v to highlight the word, your manual part is faster
+"       * con: it's usually slower to execute
 "
 " ##########################
 
+" cdo - Macro Replace with Q - The QuickFix List - one line at a time
+" macro q doesn't need the % in ':%s/TERM/REPLACE/g'
+" easiest previewing using '/'
 function! MacroReplaceQuickFixWithQOneLine()
     cdo execute "normal! @q" | w
 endfunction
-" debugm needed?
-" command! Mcrq call MacroReplaceQuickFixWithQOneLine()
+command! Mcrq call MacroReplaceQuickFixWithQOneLine()
+
+" bufdo - Macro Replace with Q - The Buffers List - entire file at a time
+" does not need to mess with the QuickFix List
+" macro requires '%' to search entire file at a time
+"   qq:%s/OLD/NEW/g<ENTER>q
+function! MacroReplaceBuffersWithQEntireFile()
+    bufdo execute "normal! @q" | w
+endfunction
+command! Mbrq call MacroReplaceBuffersWithQEntireFile()
 
 " bufdo - Macro Replace with Q - The Buffers List - entire file at a time
 " does not need to mess with the QuickFix List
@@ -103,14 +78,13 @@ endfunction
 function! MacroReplaceQuickFixWithQEntireFile()
     cfdo execute "normal! @q" | w
 endfunction
-" debugm needed?
-" command! Mcfrq call MacroReplaceQuickFixWithQEntireFile()
+command! Mcfrq call MacroReplaceQuickFixWithQEntireFile()
 
 " Searching only buffer list, to open in Quickfix list
 " Complimentary to brq & crq
-
-" Search in all currently opened buffers ...
-" ... for the last thing you search for
+"
+" VimgrepallSpecific
+" Search in all open buffers for -- the last thing you search for --
 " ... or give it a specific search term by command line
 " https://vim.fandom.com/wiki/Search_on_all_opened_buffers
 function! ClearQuickfixList()
@@ -132,9 +106,8 @@ function! VimgrepallSpecific(...)
   exe 'copen'
   " cnext " not sure what this was supposed to do
 endfunction
-" debugm needed?
-" command! -nargs=* Gbufs call VimgrepallSpecific(<f-args>)
-" command! -nargs=* GrepBuffers call VimgrepallSpecific(<f-args>)
+command! -nargs=* Gbufs call VimgrepallSpecific(<f-args>)
+command! -nargs=* GrepBuffers call VimgrepallSpecific(<f-args>)
 
 " see VimgrepallSpecific for comments
 function! VimgrepallSpecificAndOpenThemAll(...)
@@ -148,13 +121,10 @@ function! VimgrepallSpecificAndOpenThemAll(...)
   endif
   exe 'bufdo vimgrepadd ' . l:search_term . ' % | copen'
 endfunction
-" debugm needed?
-" command! -nargs=* Gbufsall call VimgrepallSpecificAndOpenThemAll(<f-args>)
-" command! -nargs=* GrepBuffersall call VimgrepallSpecificAndOpenThemAll(<f-args>)
+command! -nargs=* Gbufsall call VimgrepallSpecificAndOpenThemAll(<f-args>)
+command! -nargs=* GrepBuffersall call VimgrepallSpecificAndOpenThemAll(<f-args>)
 
-" Search in all currently opened buffers ...
-" ... for what's under the cursor
-" https://vi.stackexchange.com/questions/2904/how-to-show-search-results-for-all-open-buffers
+" Search in all open buffers for -- what's under the cursor --
 function! BuffersList()
   let all = range(0, bufnr('$'))
   let res = []
@@ -172,5 +142,4 @@ function! GrepBuffersForWordOnCursor (expression)
   exec 'vimgrep/'.a:expression.'/ '.join(BuffersList())
   exec 'copen'
 endfunction
-" debugm needed?
-" command! -nargs=+ GrepBufs call GrepBuffersForWordOnCursor(<q-args>)
+command! -nargs=+ GrepBufs call GrepBuffersForWordOnCursor(<q-args>)
