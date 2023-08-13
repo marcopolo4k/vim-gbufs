@@ -3,16 +3,6 @@ if exists('g:loadedGbufs')
 endif
 let g:loadedGbufs = 1
 
-" Visual Search originated by author of Practical Vim
-" https://stackoverflow.com/questions/16783017/search-with-visual-select-in-vim/16783292
-" Visual select the content you want to do search, then press the star key *, Voila !
-function! s:VSetSearch()
-    let temp = @s
-    norm! gv"sy
-    let @/ = '\V' . substitute(escape(@s, '/\'), '\n', '\\n','g')
-    let @s = temp
-endfunction
-
 " Search And Replace (sar, snr) - [s]ubstitute extension
 " See Plug section 'svermeulen/vim-subversive'
 " '\siwip' - [s]earches for ([i]n) current [w]ord and replaces throughout ([i]n) [p]aragraph
@@ -68,24 +58,22 @@ endfunction
 "
 " 2. load quickfix list (from buffers is fast)
 "    only if you loaded files without populating the quickfix list, choose one of:
-"      search with '/', then '\gbufs' ††
+"      search with '/', then '\gbufs' †
 "        -OR-
 "      :Gbufs SEARCHTERM
-"
 "        -OR-
-"      cursor on word, then \gbufc
-"        -OR-
-"      cursor on word, '*' to auto-search, then \gbufs
+"      cursor on word, then \gbufc (does NOT include word boundaries) ‡
 "
 " 3. make a macro labelled 'q' ('qq:s/OLD/NEW/g<ENTER>q')
 "    cdo doesn't need a '%' b/c it'll search each line individually
 "
-" 4. the effects can be seen, file by file if desired, '@q' ':n' '\b' '/' '/sbv' '/sbh'
+" 4. the effects can be seen, file by file if desired, see vim commands: '@q' ':n' '\b' '/'
+"      I have other mappings for opening windows, watch this space for: '/sbv' '/sbh'
 "
 " 5. '\gbufq' (or any of the aliases) to do the remaining files
 "
 "
-" †† Alternative to '/' to search and populate Quickfix list:
+" † Alternative to '/' to search and populate Quickfix list:
 "   1. Highlight ('ctrl-v' then move cursor around everything to search for)
 "   2. '*'
 "
@@ -93,6 +81,12 @@ endfunction
 "   This adds word boundaries, specifically: \<SEARCHTERM\>
 "   Searching will be slower than \gbufc
 "   You'll proly see some errors eventually (reproducible bug reports pls)
+"
+" ‡ Alternatives to gbufc, which DOES include word boundaries
+"   1. Install Plugin or add function to ~/.vimrc, one of:
+"       a.) VSetSearch, see https://vi.stackexchange.com/questions/42804/highlight-the-full-text-searched-on-vi-editor/42809#42809
+"       b.) Plug 'dahu/SearchParty' (choose option 2 for the global var)
+"   2. cursor on word, '*' to auto-search, then \gbufs.
 "
 " ##########################
 
