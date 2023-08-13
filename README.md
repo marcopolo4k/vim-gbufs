@@ -10,12 +10,12 @@ Sir Chin Riplace I, esquire
 
 # Description
 
-Search And Replace Multiple Files
-
-* Search And Replace with Macro `q`
-* Search And Replace with the last thing you searched for †
-* Search And Replace what you have highlighted †
-* Search And Replace with whatever is under the cursor †
+| Search And Replace Multiple Files | Mapping |
+| ----------- | ----------- |
+| Search And Replace with Macro `q` | `<leader>gbufq` |
+| Search And Replace with the last thing you searched for | `<leader>gbufs` |
+| Search And Replace what you have highlighted † | `<leader>gbufs` |
+| Search And Replace with whatever is under the cursor † | `<leader>gbufc` |
 
 # Quick Instructions
 1. load files in buffers
@@ -86,7 +86,6 @@ See †‡
    cdo doesn't need a `%` b/c it'll search each line individually
 
 4. The effects can be seen, file by file if desired, see vim commands: `@q` `:n` `\b` `/`
-   * (hidden ansible cmds) I have other mappings for opening windows: `/sbv` `/sbh`
 
 5. `\gbufq` (or any of the aliases) to do the remaining files
 
