@@ -10,6 +10,8 @@ Sir Chin Riplace I, esquire
 
 # Description
 
+Mapping shortcuts to Grep through Buffers (open files), and search/replace at will.
+
 | Search And Replace Multiple Files | Mapping |
 | ----------- | ----------- |
 | Search And Replace with Macro `q` | `<leader>gbufq` |
@@ -21,7 +23,9 @@ Sir Chin Riplace I, esquire
 1. load files in buffers
 2. load files in a quickfix list
 3. make a macro labelled `q`
-4. `\cdoq` (or your own mapping) to run the macro on all the quickfix files
+4. `\gbufq` (or your own mapping) to run the macro on all the quickfix files
+
+Keep reading for a bunch of different workflows, this one seems the most universal.
 
 # Installation
 
@@ -36,6 +40,8 @@ Plug 'marcopolo4k/vim-gbufs'
 " cdo - Macro Replace with Q - The QuickFix List - one line at a time
 " macro q doesn't need the % in ':%s/TERM/REPLACE/g'
 " easiest previewing using '/'
+nnoremap <leader>gbufq :Mcrq<cr>
+" alias, hinting you don't really need this plugin to do this part:
 nnoremap <leader>cdoq :Mcrq<cr>
 
 " [b]ufdo [r]eplace with macro [q]
