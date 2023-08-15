@@ -10,9 +10,9 @@ Sir Chin Riplace I, esquire
 
 # Description
 
-When searching and replacing files takes too long ([even when using rg](https://dev.to/hayden/optimizing-your-workflow-with-fzf-ripgrep-2eai)), this plugin helps you search through only the files you already have open.
+When searching and replacing files takes too long ([even when using rg](https://dev.to/hayden/optimizing-your-workflow-with-fzf-ripgrep-2eai)), this plugin helps you search through only the files you have open.
 
-It maps shortcuts to "grep all open buffers" (open files), and search & replace on the results.
+It maps shortcuts in order to "grep all open buffers" (open files), then you can search & replace on the results.
 
 | Search And Replace Multiple Files | Mapping |
 | ----------- | ----------- |
@@ -28,7 +28,7 @@ It maps shortcuts to "grep all open buffers" (open files), and search & replace 
 3. make a macro labelled `q` (eg `qq:%s/OLD/NEW/gENTERq`)
 4. `\gbufq` (or your own mapping) to run the macro on all the quickfix files
 
-Keep reading for a bunch of different workflows, this one seems the most universal, allowing many places to stop & inspect what you're doing.
+There's different workflows available, this one seems the most universal, allowing many places to stop & inspect what you're doing.
 
 # Installation
 
@@ -41,10 +41,10 @@ Plug 'marcopolo4k/vim-gbufs'
 " https://github.com/marcopolo4k/vim-gbufs
 "
 " cdo - Macro Replace with Q - The QuickFix List - one line at a time
-" macro q doesn't need the % in ':%s/TERM/REPLACE/g'
+" macro q does NOT need the % in ':%s/TERM/REPLACE/g'
 " easiest previewing using '/'
 nnoremap <leader>gbufq :Mcrq<cr>
-" alias, hinting you don't really need this plugin to do this part:
+" alias:
 nnoremap <leader>cdoq :Mcrq<cr>
 
 " [b]ufdo [r]eplace with macro [q]
@@ -91,8 +91,8 @@ See †‡
 2. Populate the [quickfix list](https://freshman.tech/vim-quickfix-and-location-list/) (skip this step if you already loaded the exact files you want with `:grep SEARCHTERM`)
 
    Choose one of:
-   * search with `/`, then `\gbufs` †
    * `:Gbufs SEARCHTERM`
+   * search with `/`, then `\gbufs` †
    * cursor on word, then `\gbufc` ‡
 
 4. Make a macro labelled `q` (`qq:s/OLD/NEW/g<ENTER>q`)
@@ -104,29 +104,38 @@ See †‡
 
 ## †‡ 2 alternatives require one of two additions:
 Install Plugin or add function to ~/.vimrc, one of these two:
-1. `VSetSearch`, see [this stack convo](https://vi.stackexchange.com/questions/42804/highlight-the-full-text-searched-on-vi-editor/42809#42809)
-1. Plug `dahu/SearchParty` (choose option 2 for the global var)
+  1. `VSetSearch`, see [this stack convo](https://vi.stackexchange.com/questions/42804/highlight-the-full-text-searched-on-vi-editor/42809#42809)
+  1. Plug `dahu/SearchParty` (choose option 2 for the global var)
 
-### † Alternative to `/` to search and populate Quickfix list:
+### † Alternative 1:
   1. Highlight some text (`ctrl-v` then move cursor around everything to search for)
-  2. `*`
+  1. `*`
+  1. `\gbufs`
 
- * This allows for full punctuation, eg around variables, and more
- * This does NOT add word boundaries.
- * Searching will be slower than `\gbufc`
+  * This does NOT add word boundaries in the search.
+    
+  * pro: Allows for full punctuation, eg around variables, and more
+  * pro: Faster to run the search.
+  * con: Slower to select what you want & start searching.
 
-### ‡ Alternative to `gbufc`, includes word boundaries
-Put cursor on the word to search, then `*` to auto-search, then `\gbufs`.
- * pro: You don't have to `cntrl-v` to highlight the word, so your manual part is faster
- * con: It's usually slower to execute
- * pro OR con: This opens the Quickfix window
- * pro OR con: This adds word boundaries around the word, so: `\<SEARCHTERM\>`
+### ‡ Alternative 2 gbufc, includes word boundaries:
+  1. Put cursor on the word to search
+  1. `*` to auto-search
+  1. `\gbufs`
+
+  * This opens the Quickfix window
+  * This adds word boundaries around the word, so: `\<SEARCHTERM\>`
+    
+  * pro: Faster to start searching.
+  * con: Slower to run the search.
+
 
 # More Details
 
 " lorem impsom cdo - Macro Replace with Q - The QuickFix List - one line at a time
 " macro q doesn't need the % in ':%s/TERM/REPLACE/g'
 " easiest previewing using '/'
+" Available upon request: I could add functions to open or not open the quickfix preview window
 
 # Recommended Plugins/Additions
 * Subversive vim plugin.  I have a bunch of mapping for that I almost put here.
