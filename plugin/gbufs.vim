@@ -12,6 +12,7 @@ let g:loadedGbufs = 1
 function! MacroReplaceQuickFixWithQOneLine()
     cdo execute "normal! @q" | w
 endfunction
+command! MacroRplceQckFxWithQOneLine call MacroReplaceQuickFixWithQOneLine()
 command! Mcrq call MacroReplaceQuickFixWithQOneLine()
 
 " bufdo - Macro Replace with Q - The Buffers List - entire file at a time
@@ -21,6 +22,7 @@ command! Mcrq call MacroReplaceQuickFixWithQOneLine()
 function! MacroReplaceBuffersWithQEntireFile()
     bufdo execute "normal! @q" | w
 endfunction
+command! MacroRplceBuffersWithQEntireFile call MacroReplaceBuffersWithQEntireFile()
 command! Mbrq call MacroReplaceBuffersWithQEntireFile()
 
 " bufdo - Macro Replace with Q - The Buffers List - entire file at a time
@@ -30,6 +32,7 @@ command! Mbrq call MacroReplaceBuffersWithQEntireFile()
 function! MacroReplaceQuickFixWithQEntireFile()
     cfdo execute "normal! @q" | w
 endfunction
+command! MacroReplaceQuickFixWithQEntireFile call MacroReplaceQuickFixWithQEntireFile()
 command! Mcfrq call MacroReplaceQuickFixWithQEntireFile()
 
 " Searching only buffer list, to open in Quickfix list
