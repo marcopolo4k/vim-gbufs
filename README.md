@@ -48,7 +48,7 @@ There's more workflows available with this plugin or vim search & replace in gen
 ### ~/.vimrc, just the most basic
 ```
 Plug 'marcopolo4k/vim-gbufs'
-nnoremap <leader>gbufs :call VimgrepallSpecific()
+nnoremap <leader>gbufs :call BufdoVimgrepaddCopen()
 nnoremap <leader>gbufq :MacroRplceBuffersWithQEntireFile <cr>
 nnoremap <leader>bigq :MacroReplaceQuickFixWithQEntireFile<cr>
 nnoremap <leader>finish :MacroRplceQckFxWithQOneLine <cr>
@@ -100,13 +100,13 @@ nnoremap <leader>bigq :MacroReplaceQuickFixWithQEntireFile<cr>
 " Search all open buffers -- for the last thing you search for --
 "  Maybe your last search has word boundaries, or not. Check with '/↑'
 " https://vim.fandom.com/wiki/Search_on_all_opened_buffers
-nnoremap <leader>gbufs :call VimgrepallSpecific()
+nnoremap <leader>gbufs :call BufdoVimgrepaddCopen()
 " 2nd option: Search and then open them all in horizontal window panes
-nnoremap <leader>gbufa :call VimgrepallSpecificAndOpenThemAll()
+nnoremap <leader>gbufa :call BufdoVimgrepaddCopenAndOpenThemAll()
 " 3rd option: Type out a specific search term by command line
 "   :Gbufs SEARCH_TERM
 " for memorizing
-nnoremap <leader>bufdovimgrep :call VimgrepallSpecific()
+nnoremap <leader>bufdovimgrep :call BufdoVimgrepaddCopen()
 
 " Search all open buffers -- for what's under the cursor --
 "  No word boundaries default, depending on your config

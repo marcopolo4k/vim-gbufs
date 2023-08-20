@@ -38,7 +38,7 @@ command! Mcfrq call MacroReplaceQuickFixWithQEntireFile()
 " Searching only buffer list, to open in Quickfix list
 " Complimentary to brq & crq
 "
-" VimgrepallSpecific
+" BufdoVimgrepaddCopen
 " Search in all open buffers for -- the last thing you search for --
 " ... or give it a specific search term by command line
 " https://vim.fandom.com/wiki/Search_on_all_opened_buffers
@@ -46,7 +46,7 @@ function! ClearQuickfixList()
   call setqflist([])
 endfunction
 
-function! VimgrepallSpecific(...)
+function! BufdoVimgrepaddCopen(...)
   let l:optional_arg = get(a:, 1, 0)
   call ClearQuickfixList()
   let l:search_term = ''
@@ -61,11 +61,11 @@ function! VimgrepallSpecific(...)
   exe 'copen'
   " cnext " not sure what this was supposed to do
 endfunction
-command! -nargs=* Gbufs call VimgrepallSpecific(<f-args>)
-command! -nargs=* GrepBuffers call VimgrepallSpecific(<f-args>)
+command! -nargs=* Gbufs call BufdoVimgrepaddCopen(<f-args>)
+command! -nargs=* GrepBuffers call BufdoVimgrepaddCopen(<f-args>)
 
-" see VimgrepallSpecific for comments
-function! VimgrepallSpecificAndOpenThemAll(...)
+" see BufdoVimgrepaddCopen for comments
+function! BufdoVimgrepaddCopenAll(...)
   let l:optional_arg = get(a:, 1, 0)
   call ClearQuickfixList()
   let l:search_term = ''
@@ -76,8 +76,8 @@ function! VimgrepallSpecificAndOpenThemAll(...)
   endif
   exe 'bufdo vimgrepadd ' . l:search_term . ' % | copen'
 endfunction
-command! -nargs=* Gbufsall call VimgrepallSpecificAndOpenThemAll(<f-args>)
-command! -nargs=* GrepBuffersall call VimgrepallSpecificAndOpenThemAll(<f-args>)
+command! -nargs=* Gbufsall call BufdoVimgrepaddCopenAll(<f-args>)
+command! -nargs=* GrepBuffersall call BufdoVimgrepaddCopenAll(<f-args>)
 
 " Search in all open buffers for -- what's under the cursor --
 function! BuffersList()
