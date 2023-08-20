@@ -41,7 +41,7 @@ Plug 'marcopolo4k/vim-gbufs'
 "
 " cdo - Macro Replace with Q - The QuickFix List - one line at a time
 "  macro q does NOT need the % in ':%s/TERM/REPLACE/g'
-"  macro q DOES need the TERM in ':%s/TERM/REPLACE/g'
+"  macro q DOES need the TERM in ':s/TERM/REPLACE/g'
 "  This makes for the easiest previewing using '/'
 "  Aliases: mrq, cdoq, gbufq
 nnoremap <leader>mrq :MacroRplceQckFxWithQOneLine <cr>
