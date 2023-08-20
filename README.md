@@ -152,7 +152,7 @@ Just searching and seeing something you might want to replace is common.  If you
 
 ## A lot of searching/replacing of big files
 
-Sometimes files are big, and you want the search itself to be fast.  Instead of line by line, this searches every file in the Quickfix list with one macro (instead of line-by-line like gbufq does):
+Sometimes files are big, and you want the search itself to be fast.  Instead of line by line, this searches each file in the Quickfix list, just once with one macro `q` (vs `gbufq` that executes the macro once per search result occurrance).
 
 1. Load buffers, let's choose `vim $( rg -l SEARCHTERM )`, with optional use of `rg` to preview which files you're getting.
 1. Record macro: `qq:%s/SEARCH/REPLACE/gq`
@@ -170,4 +170,3 @@ I could add functions to open or not open the quickfix preview window to anythin
 * [ripgrep](https://duckduckgo.com/?q=ripgrep+vim&ia=web)
 * custom window navigation mappings
 * `dahu/SearchParty` (although it messed up my window navigation mappings, so I had to just use Visual Search snippet from Practical Vim)
-
