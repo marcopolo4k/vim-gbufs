@@ -93,7 +93,7 @@ nnoremap <leader>bufdoq :MacroRplceBuffersWithQEntireFile<cr>
 "
 " [c]fdo [r]eplace with macro [q]
 nnoremap <leader>crq :MacroReplaceQuickFixWithQEntireFile<cr>
-" [cfdo] replace with macro [q]
+" for memorizing
 nnoremap <leader>cfdoq :MacroReplaceQuickFixWithQEntireFile<cr>
 nnoremap <leader>bigq :MacroReplaceQuickFixWithQEntireFile<cr>
 
