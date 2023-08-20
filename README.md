@@ -22,17 +22,17 @@ To do multi-file search/replacing in vim, you need to understand [buffers](https
 
 # Quick Instructions
 
-| Search Opened Files / Show Quickfix Window | Mapping | |
+| Search Opened Files / Show Quickfix Window | Mapping | Note |
 | ----------- | ----------- | ----------- |
-| Search buffers for the last thing you searched for (/) | `<leader>gbufs` | |
-| Search buffers for what you have highlighted † | `<leader>gbufs` | |
-| Search buffers for whatever is under the **cursor** † | `<leader>gbufc` | |
+| Search buffers for the last thing you searched for | `<leader>gbufs` | `/` to search in page |
+| Search buffers for what you have highlighted † | `<leader>gbufs` | Additional install |
+| Search buffers for whatever is under the **cursor** † | `<leader>gbufc` | Additional install |
 
 | Search And Replace Multiple Files - using Macro `q` | Mapping | Macro | Best For |
 | ----------- | ----------- | ----------- | ----------- |
 | Search And Replace all loaded files | `<leader>gbufq` | `qq:%s/OLD/NEW/g<ENTER>q` | convenience |
 | Search/Replace QuickFix files, full page | `<leader>bigq` | `qq:%s/OLD/NEW/g<ENTER>q` | big files/lots of results |
-| Search/Replace QuickFix files, line-by-line | `<leader>finish` | `qq:s/OLD/NEW/g<ENTER>q` | previewing a lot
+| Search/Replace QuickFix files, line-by-line | `<leader>finish` | `qq:s//NEW/g<ENTER>qj` | previewing a lot
 
 ### Doo Eeet
 
@@ -41,7 +41,7 @@ To do multi-file search/replacing in vim, you need to understand [buffers](https
 3. make a macro labelled `q` (eg `qq:%s/OLD/NEW/gENTERq`)
 4. `\gbufq` to run the macro on all the files
 
-There's many more workflows available with this plugin or vim search & replace in general.
+There's more workflows available with this plugin or vim search & replace in general.
 
 # Installation
 
@@ -129,7 +129,7 @@ If you want to stop using this plugin, you can start with these mappings to help
 | ----------- | ----------- | ----------- | ----------- |
 | Search And Replace all loaded files | `<leader>bufdoq` | `qq:%s/OLD/NEW/g<ENTER>q` | convenience |
 | `:bufdo execute "normal! @q" \| w` |
-| Search/Replace QuickFix files, line-by-line | `<leader>cdoq` | `qq:s/OLD/NEW/g<ENTER>q` | previewing a lot
+| Search/Replace QuickFix files, line-by-line | `<leader>cdoq` | `qq:s//NEW/g<ENTER>qj` | previewing a lot
 | `:cdo execute "normal! @q" \| w` |
 | Search/Replace QuickFix files, full page | `<leader>cfdoq` | `qq:%s/OLD/NEW/g<ENTER>q` | big files |
 | `:cfdo execute "normal! @q" \| w` |
@@ -151,15 +151,17 @@ If you want to stop using this plugin, you can start with these mappings to help
    * search with `/`, then `\gbufs` †
    * cursor on word, then `\gbufc` ‡
 
-4. Make a macro labelled `q` (`qq:s/OLD/NEW/g<ENTER>q`)
+4. Make a macro labelled `q` (`qq:s/OLD/NEW/g<ENTER>qj`)
    cdo doesn't need a `%` b/c it'll search each line individually
 
 5. The effects can be seen, file by file if desired, with vim commands: `@q` `:n` `/` etc
    1. Search on a single buffer with `/`, hit `n` a few times to look around.
-   2. Unless it exists, make macro `q`, like `qq:s//NEW/g<ENTER>` (the last search is used if left blank for the OLD search).
+   2. Unless it exists, make macro `q`, like `qq:s//NEW/g<ENTER>j`
+      * OLD is left empty since the last search is used by default.
+      * j goes to next line, in the interest of step v.
    3. Run `@q` to replace the line you're looking at.
    4. `n` to find the next result, `@@` to run macro on that.
-   5. `:n` to see the next page.  Or better, use quickfix list to see all results. Repeat steps 1 & 3.
+   5. `:n` to see the next page.  Or better, use quickfix list to see all results. Repeat steps i & iii.
    6. Maybe look around your buffer list if there's any file that might be different.
 
 7. When happy, run the macro on the rest of the files: `<leader>finish`
@@ -208,15 +210,15 @@ Sometimes files are big or there's lots of results on each page, and you need th
 1. Record macro: `qq:%s/SEARCH/REPLACE/gq`
 1. `/SEARCH` on the first page, then preview the change: `@q`, then `n` and `@@` for more on the first page.
 1. Load Quickfix list, let's choose `\gbufs`
-1. `\crq` to search/replace once on every file in the Quickfix list.
+1. `\bigq` to search/replace once on every file in the Quickfix list.
 
 # Available upon request
 
-I could add functions to open or not open the quickfix preview window to anything seen on this plugin.
+I could add functions to specifically open or NOT open the QuickFix preview window for any of these.
 
 # Recommended Plugins/Additions
-* [Subversive](https://github.com/svermeulen/vim-subversive) vim plugin.  I have a bunch of mapping for that I almost put here.
+* [Subversive](https://github.com/svermeulen/vim-subversive) vim plugin.  I have a bunch of mapping for that I almost put here for single-page search & replace.
 * [FZF](https://duckduckgo.com/?q=fzf+vim&ia=web) vim plugin
 * [ripgrep](https://duckduckgo.com/?q=ripgrep+vim&ia=web)
 * custom window navigation mappings
-* `dahu/SearchParty` (although it messed up my window navigation mappings, so I had to just use Visual Search snippet from Practical Vim)
+* [dahu/SearchParty](https://github.com/dahu/SearchParty)
