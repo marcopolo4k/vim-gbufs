@@ -13,13 +13,15 @@ When searching and replacing files takes too long ([even when using rg](https://
 
 It maps shortcuts in order to "grep all open buffers" (open files), then you can search & replace on the results.
 
-| Search And Replace Multiple Files | Mapping |
-| ----------- | ----------- |
-| Search buffers for the last thing you searched for (/) | `<leader>gbufs` |
-| Search buffers for what you have highlighted † | `<leader>gbufs` |
-| Search buffers for whatever is under the cursor † | `<leader>gbufc` |
-| ----------- | ----------- |
-| Search And Replace all previously found files with Macro `q` | `<leader>gbufq` |
+| Search And Replace Multiple Files | Mapping | Note |
+| ----------- | ----------- | ----------- |
+| Search buffers for the last thing you searched for (/) | `<leader>gbufs` | |
+| Search buffers for what you have highlighted † | `<leader>gbufs` | |
+| Search buffers for whatever is under the cursor † | `<leader>gbufc` | |
+| ----------- | ----------- | ----------- |
+| Search And Replace all loaded files with Macro `q` | `<leader>gbufq` | `qq:%s/OLD/NEW/g<ENTER>q` |
+| Search/Replace QuickFix files with Macro `q`, full page | `<leader>crq` | `qq:%s/OLD/NEW/g<ENTER>q` |
+| Search/Replace QuickFix files with Macro `q`, line-by-line | `<leader>snr` | `qq:s/OLD/NEW/g<ENTER>q` |
 
 # Quick Instructions
 1. load files in buffers
@@ -68,16 +70,16 @@ nnoremap <leader>cfdoq :MacroReplaceQuickFixWithQEntireFile<cr>
 " Searching only buffer list, to open in Quickfix list
 " Complimentary to brq & crq
 
-" Search in all open buffers for -- the last thing you search for --
+" Search all open buffers -- for the last thing you search for --
 "  Maybe your last search has word boundaries, or not. Check with '/↑'
 " https://vim.fandom.com/wiki/Search_on_all_opened_buffers
 nnoremap <leader>gbufs :call VimgrepallSpecific()
-" ... and open them all in windows
+" 2nd option: Search and then open them all in horizontal window panes
 nnoremap <leader>gbufa :call VimgrepallSpecificAndOpenThemAll()
 " 3rd option: Type out a specific search term by command line
 "   :Gbufs SEARCH_TERM
 
-" Search all open buffers for -- what's under the cursor --
+" Search all open buffers -- for what's under the cursor --
 "  No word boundaries default, depending on your config
 "  Requires either VSetSearch or SearchParty †‡
 "  Loads search result files into Quickfix List
