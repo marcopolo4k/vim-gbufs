@@ -11,8 +11,8 @@ Shortcuts to "**grep** all open **buffers**" (open files), and **search & replac
 ## Why?
 
 * Searching takes too long?
+* Maybe you're using a *huge repo* or fighting a slow connection?
 * Vim search/replacing confusing?
-* Maybe you're using a huge repo or fighting a slow connection?
 
 When searching and replacing files takes too long ([even when using rg](https://dev.to/hayden/optimizing-your-workflow-with-fzf-ripgrep-2eai)), this plugin helps you search through only the files you have open.  It could also help teach some of vim's search/replace capababilities.
 
@@ -30,7 +30,7 @@ To do multi-file search/replacing in vim, you need to understand [buffers](https
 
 | Search And Replace Multiple Files - using Macro `q` | Mapping | Macro | Best For |
 | ----------- | ----------- | ----------- | ----------- |
-| Search And Replace all loaded files | `<leader>gbufq` | `qq:%s/OLD/NEW/g<ENTER>q` | convenience |
+| Search And Replace all loaded files | `<leader>gbufq` | `qq:%s/OLD/NEW/g<ENTER>q` | convenience - no QF needed |
 | Search/Replace QuickFix files, full page | `<leader>bigq` | `qq:%s/OLD/NEW/g<ENTER>q` | big files/lots of results |
 | Search/Replace QuickFix files, line-by-line | `<leader>finish` | `qq:s//NEW/g<ENTER>qj` | previewing a lot
 
@@ -41,7 +41,22 @@ To do multi-file search/replacing in vim, you need to understand [buffers](https
 3. make a macro labelled `q` (eg `qq:%s/OLD/NEW/gENTERq`)
 4. `\gbufq` to run the macro on all the files
 
-There's more workflows available with this plugin or vim search & replace in general.
+There's more workflows, but these 3 are the most common I've found.
+
+![Example of \finish](https://i.imgur.com/Dc9dVFO.gif)
+
+In this video:
+1. Load a bunch of files into vim buffers using pattern: `vim $( find . )`
+1. Search for `get_`, don't find it in first file.
+1. Search all open buffers using `\gbufs`. Results are displayed in the QuickFix screen.
+1. Record macro `qq:s//set_/gjq`
+  * `qq` - record macro named `q`
+  * `:` - vim command mode
+  * `s//set_/g` - it's empty, so search for last search term (`get_`), replace with `set_`, globally for each line
+  * `j` - move down one line, no need to repeat for multiple on same line
+  * `q` - stop macro recording
+1. `n` around, `@q`, then `@@` to try the macro on different pages.
+1. `\finish` to run the macro on all results found.
 
 # Installation
 
