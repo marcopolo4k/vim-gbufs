@@ -45,7 +45,7 @@ There's more workflows, but these 3 are the most common I've found.
 
 ### Example of the `finish` Workflow
 
-![Example of \finish](https://i.imgur.com/Dc9dVFO.gif)
+![Example of \finish](https://i.imgur.com/hah0Nl4.mp4)
 
 In this video:
 1. Load a bunch of files into vim buffers using pattern: `vim $( find . )`
