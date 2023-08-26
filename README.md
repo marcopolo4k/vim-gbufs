@@ -49,16 +49,16 @@ There's more workflows, but these 3 are the most common I've found.
 
 In this video:
 1. Load a bunch of files into vim buffers using pattern: `vim $( find . )`
-1. Search for `get_`, don't find it in first file.
-1. Search all open buffers using `\gbufs`. Results are displayed in the QuickFix screen.
-1. Record macro `qq:s//set_/gjq`
+2. Search for `get_`, don't find it in first file.
+3. Search all open buffers using `\gbufs`. Results are displayed in the QuickFix screen.
+4. Record macro `qq:s//set_/gjq`
   * `qq` - record macro named `q`
   * `:` - vim command mode
   * `s//set_/g` - it's empty, so search for last search term (`get_`), replace with `set_`, globally for each line
   * `j` - move down one line, no need to repeat for multiple on same line
   * `q` - stop macro recording
-1. `n` around, `@q`, then `@@` to try the macro on different pages.
-1. `\finish` to run the macro on all results found.
+5. `n` around, `@q`, then `@@` to try the macro on different pages.
+6. `\finish` to run the macro on all results found.
 
 # Installation
 
@@ -144,7 +144,7 @@ If you want to stop using this plugin, you can start with these mappings to help
 
 | Search And Replace Multiple Files | Mapping | Macro | Best For |
 | ----------- | ----------- | ----------- | ----------- |
-| Search And Replace all loaded files | `<leader>bufdoq` | `qq:%s/OLD/NEW/g<ENTER>q` | convenience |
+| Search And Replace all loaded files | `<leader>bufdoq` | `qq:%s/OLD/NEW/g<ENTER>q` | convenience - no QF needed |
 | `:bufdo execute "normal! @q" \| w` |
 | Search/Replace QuickFix files, line-by-line | `<leader>cdoq` | `qq:s//NEW/g<ENTER>qj` | previewing a lot
 | `:cdo execute "normal! @q" \| w` |
