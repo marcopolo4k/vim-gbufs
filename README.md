@@ -34,7 +34,7 @@ To do multi-file search/replacing in vim, you need to understand [buffers](https
 | Search/Replace QuickFix files, full page | `<leader>bigq` | `qq:%s/OLD/NEW/g<ENTER>q` | big files/lots of results |
 | Search/Replace QuickFix files, line-by-line | `<leader>finish` | `qq:s//NEW/g<ENTER>qj` | previewing a lot
 
-### Doo Eeet
+### Basic Universal Instructions
 
 1. load files in buffers
 2. load files in a quickfix list (optional)
@@ -42,6 +42,8 @@ To do multi-file search/replacing in vim, you need to understand [buffers](https
 4. `\gbufq` to run the macro on all the files
 
 There's more workflows, but these 3 are the most common I've found.
+
+### Example of the `finish` Workflow
 
 ![Example of \finish](https://i.imgur.com/Dc9dVFO.gif)
 
@@ -148,8 +150,10 @@ If you want to stop using this plugin, you can start with these mappings to help
 | `:cdo execute "normal! @q" \| w` |
 | Search/Replace QuickFix files, full page | `<leader>cfdoq` | `qq:%s/OLD/NEW/g<ENTER>q` | big files |
 | `:cfdo execute "normal! @q" \| w` |
+| Argdo runs on the original open file list | no macro yet | author of gbufs is lazy and | ? |
+| `:argdo execute "normal! @q" \| w` |  | hasn't needed this one yet |
 
-# Long Instructions for Workflow: Search and Preview a lot before replacing on all the files
+# Long Instructions for `finish` Workflow: Search and Preview a lot before replacing on all the files
 
 1. Load files in buffers.
 
@@ -209,7 +213,7 @@ See additional installation instructions †‡
 
 # More Workflows
 
-## Simple search and view results
+## Simple search and view results - `gbufs`
 
 Just searching and seeing something you might want to replace is common.  If you're not ready to replace anything, it's fastest to search for the word without word boundaries.  I use the default `\` for my leader key.
 
@@ -217,7 +221,7 @@ Just searching and seeing something you might want to replace is common.  If you
 1. `\gbufs` to search current buffers for the term, it opens the Quickfix window.
 1. Use window pane navigation to go to different files and see the usage.
 
-## A lot of searching/replacing of big files
+## A lot of searching/replacing of big files - `bigq`
 
 Sometimes files are big or there's lots of results on each page, and you need the search itself to be fast.  Instead of line by line, this searches each file in the Quickfix list, just once with one macro `q` (vs `gbufq` that executes the macro on every occurrance).
 
