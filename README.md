@@ -1,6 +1,6 @@
 # gbufs.vim
 
-SOMEWHAT EXPERIMENTAL
+SOMEWHAT EXPERIMENTAL, SOMEWHAT JUST SHOWING WHEN TO USE CDO, CFDO, BUFDO.
 
 ---
 
@@ -11,7 +11,7 @@ Shortcuts to "**grep** all open **buffers**" (open files), and **search & replac
 ## Why?
 
 * Searching takes too long?
-* Maybe you're using a *huge repo* or fighting a slow connection?
+* Maybe you're using a **huge repo** or fighting a slow connection?
 * Vim search/replacing confusing?
 
 When searching and replacing files takes too long ([even when using rg](https://dev.to/hayden/optimizing-your-workflow-with-fzf-ripgrep-2eai)), this plugin helps you search through only the files you have open.  It could also help teach some of vim's search/replace capababilities.
@@ -136,7 +136,7 @@ nnoremap <leader>gbufc :call GrepBuffersForWordOnCursor("<C-R><C-W>")<CR>
 ### HIGHLY RECOMMENDED additions for quicker searching:
 †‡ EITHER Install Plugin OR add a function to ~/.vimrc, choose one of these two:
   1. `VSetSearch`, see [this stack convo](https://stackoverflow.com/a/42776237/9009249)
-  1. Plug `dahu/SearchParty` (choose option 2 for the global var)
+  1. Plug [dahu/SearchParty](https://github.com/dahu/SearchParty) (choose option 2 for the global var)
 
 # Learn real vim
 
@@ -223,7 +223,7 @@ Just searching and seeing something you might want to replace is common.  If you
 
 ## A lot of searching/replacing of big files - `bigq`
 
-Sometimes files are big or there's lots of results on each page, and you need the search itself to be fast.  Instead of line by line, this searches each file in the Quickfix list, just once with one macro `q` (vs `gbufq` that executes the macro on every occurrance).
+Sometimes files are big or there's lots of results on each page, and you need the search itself to be fast.  Instead of line by line, this searches each file in the Quickfix list, just once with one macro `q` (vs `finish` that executes the macro on every occurrance).
 
 1. Load buffers, let's choose `vim $( rg -l SEARCHTERM )`, with optional use of `rg` to preview which files you're getting. (rg is ripgrep, highly recommended)
 1. Record macro: `qq:%s/SEARCH/REPLACE/gq`
@@ -235,7 +235,15 @@ Sometimes files are big or there's lots of results on each page, and you need th
 
 I could add functions to specifically open or NOT open the QuickFix preview window for any of these.
 
-# Recommended Plugins/Additions
+# Recommended Plugins instead of gbufs
+* [vim-esearch](vim-esearch) way more powerful (gbufs is just a couple simple maps), I just haven't been able to get it to work on most of my older systems.
+* If you use Neovim, there's so many search and replace plugins (besides esearch which is supposed to work on both):
+  * [nvim-spectre](https://github.com/nvim-pack/nvim-spectre)
+  * [telescope](https://github.com/nvim-telescope/telescope.nvim)
+  * [muren](https://github.com/AckslD/muren.nvim)
+  * [replacer](https://github.com/gabrielpoca/replacer.nvim)
+
+# Recommended Plugins/Additions complimentary to gbufs
 * [Subversive](https://github.com/svermeulen/vim-subversive) vim plugin.  I have a bunch of mapping for that I almost put here for single-page search & replace.
 * [FZF](https://duckduckgo.com/?q=fzf+vim&ia=web) vim plugin
 * [ripgrep](https://duckduckgo.com/?q=ripgrep+vim&ia=web)
