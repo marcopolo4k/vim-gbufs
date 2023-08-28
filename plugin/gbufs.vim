@@ -57,6 +57,7 @@ function! BufdoVimgrepaddCopen(...)
   else
       let l:search_term = l:optional_arg
   endif
+  exe 'cclose'
   exe 'bufdo vimgrepadd "' . l:search_term . '" %'
   exe 'copen'
   " cnext " not sure what this was supposed to do
