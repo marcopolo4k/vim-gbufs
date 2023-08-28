@@ -13,12 +13,9 @@ Shortcuts to "**grep** all open **buffers**" (open files), and **search & replac
 * Searching takes too long?
 * Maybe you're using a **huge repo** or fighting a slow connection?
 * Vim search/replacing confusing?
+* Using an old vim or fanciest plugins have errors?
 
 When searching and replacing files takes too long ([even when using rg](https://dev.to/hayden/optimizing-your-workflow-with-fzf-ripgrep-2eai)), this plugin helps you search through only the files you have open.  It could also help teach some of vim's search/replace capababilities.
-
-## Prerequisite
-
-To do multi-file search/replacing in vim, you need to understand [buffers](https://dev.to/iggredible/using-buffers-windows-and-tabs-efficiently-in-vim-56jc), and preferably the [quickfix window](https://freshman.tech/vim-quickfix-and-location-list/).
 
 # Quick Instructions
 
@@ -59,6 +56,17 @@ In this video:
   * `q` - stop macro recording
 5. `n` around, `@q`, then `@@` to try the macro on different pages.
 6. `\finish` to run the macro on all results found.
+
+# Table of Contents
+1. [Installation](#installation)
+1. [Prerequisites](#prerequisites)
+1. [Learn real vim](#learn-real-vim)
+1. [Long Instructions for Workflow - `finish`](#long-instructions-for-finish-workflow-search-and-preview-a-lot-before-replacing-on-all-the-files)
+1. [More Workflows](#more-workflows)
+   1. Simple search and view results - `gbufs`
+   1. A lot of searching/replacing of big files - `bigq`
+1. [Recommended Plugins instead of gbufs](#recommended-plugins-instead-of-gbufs)
+1. [Recommended Plugins/Additions complimentary to gbufs](#recommended-pluginsadditions-complimentary-to-gbufs)
 
 # Installation
 
@@ -135,8 +143,12 @@ nnoremap <leader>gbufc :call GrepBuffersForWordOnCursor("<C-R><C-W>")<CR>
 
 ### HIGHLY RECOMMENDED additions for quicker searching:
 †‡ EITHER Install Plugin OR add a function to ~/.vimrc, choose one of these two:
-  1. `VSetSearch`, see [this stack convo](https://stackoverflow.com/a/42776237/9009249)
-  1. Plug [dahu/SearchParty](https://github.com/dahu/SearchParty) (choose option 2 for the global var)
+  * `VSetSearch`, see [this stack convo](https://stackoverflow.com/a/42776237/9009249)
+  * Plug [dahu/SearchParty](https://github.com/dahu/SearchParty) (choose option 2 for the global var)
+
+# Prerequisites
+* To do multi-file search/replacing in vim, you need to understand [buffers](https://dev.to/iggredible/using-buffers-windows-and-tabs-efficiently-in-vim-56jc), and preferably the [quickfix window](https://freshman.tech/vim-quickfix-and-location-list/).
+* See those highly recommended additions at the end of the installation section, those might almost be considered prereqs.
 
 # Learn real vim
 
@@ -236,8 +248,8 @@ Sometimes files are big or there's lots of results on each page, and you need th
 I could add functions to specifically open or NOT open the QuickFix preview window for any of these.
 
 # Recommended Plugins instead of gbufs
-* [vim-esearch](vim-esearch) way more powerful (gbufs is just a couple simple maps), I just haven't been able to get it to work on most of my older systems.
-* If you use Neovim, there's so many search and replace plugins (besides esearch which is supposed to work on both):
+* [vim-esearch](vim-esearch) is way more powerful, since `gbufs` is just a couple simple maps.  But I haven't been able to get `esearch` to work on anything but vim9 yet, so for me at least, `gbufs` will be used on old vim8 systems. `gbufs` might also still be preferred if you want simple maps that help you memorize the full vim commands, or just don't want larger plugins.
+* If you use Neovim, `gbufs` won't work, but there's so many search and replace plugins (besides `esearch`, which is supposed to work on both):
   * [nvim-spectre](https://github.com/nvim-pack/nvim-spectre)
   * [telescope](https://github.com/nvim-telescope/telescope.nvim)
   * [muren](https://github.com/AckslD/muren.nvim)
@@ -248,4 +260,4 @@ I could add functions to specifically open or NOT open the QuickFix preview wind
 * [FZF](https://duckduckgo.com/?q=fzf+vim&ia=web) vim plugin
 * [ripgrep](https://duckduckgo.com/?q=ripgrep+vim&ia=web)
 * custom window navigation mappings
-* [dahu/SearchParty](https://github.com/dahu/SearchParty)
+* [dahu/SearchParty](https://github.com/dahu/SearchParty) - practically a requirement for `gbufs`
