@@ -229,7 +229,7 @@ See additional installation instructions †‡
 
 Just searching and seeing something you might want to replace is common.  If you're not ready to replace anything, it's fastest to search for the word without word boundaries.  I use the default `\` for my leader key.
 
-1. `cntrl-v` highlight from beginning to end of word, then `*`. †
+1. `ve` visual highlight from beginning to end of word, then `*`. †
 1. `\gbufs` to search current buffers for the term, it opens the Quickfix window.
 1. Use window pane navigation to go to different files and see the usage.
 
