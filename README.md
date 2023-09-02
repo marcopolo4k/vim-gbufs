@@ -1,9 +1,3 @@
-# gbufs.vim
-
-SOMEWHAT EXPERIMENTAL, SOMEWHAT JUST SHOWING WHEN TO USE CDO, CFDO, BUFDO.
-
----
-
 # Description
 
 Shortcuts to "**grep** all open **buffers**" (open files), and **search & replace** on the results or the open files themselves.
@@ -14,8 +8,9 @@ Shortcuts to "**grep** all open **buffers**" (open files), and **search & replac
 * Maybe you're using a **huge repo** or fighting a slow connection?
 * Vim search/replacing confusing?
 * Using an old vim or fanciest plugins have errors?
+* Want a few maps named to help you memorize the plain vim commands so you don't need any plugin?
 
-When searching and replacing files takes too long ([even when using rg](https://dev.to/hayden/optimizing-your-workflow-with-fzf-ripgrep-2eai)), this plugin helps you search through only the files you have open.  It could also help teach some of vim's search/replace capababilities.
+When searching and replacing files takes too long ([even when using rg](https://dev.to/hayden/optimizing-your-workflow-with-fzf-ripgrep-2eai)), this plugin helps you search through only the files you have open.
 
 # Quick Instructions
 
@@ -23,9 +18,9 @@ When searching and replacing files takes too long ([even when using rg](https://
 | ----------- | ----------- | ----------- |
 | Search buffers for the last thing you searched for | `<leader>gbufs` | `/` to search in page |
 | Search buffers for whatever is under the **cursor** † | `<leader>gbufc` | Additional install |
-| Search buffers for what you have highlighted † | `<leader>gbufs` | Additional install |
+| Highlight, search page, then search buffers † | `<leader>gbufs` | Additional install |
 
-| Search And Replace Multiple Files - using Macro `q` | Mapping | Macro | Best For |
+| Search And Replace Multiple Files, use Macro `q` | Mapping | Macro | Best For |
 | ----------- | ----------- | ----------- | ----------- |
 | Search And Replace all loaded files | `<leader>gbufq` | `qq:%s/OLD/NEW/g<ENTER>q` | convenience - no QF needed |
 | Search/Replace QuickFix files, full page | `<leader>bigq` | `qq:%s/OLD/NEW/g<ENTER>q` | big files/lots of results |
@@ -45,7 +40,7 @@ There's more workflows, but these 3 are the most common I've found.
 ![Example of \finish](https://i.imgur.com/Dc9dVFO.gif)
 
 In this video:
-1. Load a bunch of files into vim buffers using pattern: `vim $( find . )`
+1. Load a bunch of files into vim buffers using pattern: `vim $( find . )` ([rg](#recommended-pluginsadditions-complimentary-to-gbufs) is recommended instead of find)
 2. Search for `get_`, don't find it in first file.
 3. Search all open buffers using `\gbufs`. Results are displayed in the QuickFix screen.
 4. Record macro `qq:s//set_/gjq`
@@ -82,54 +77,16 @@ nnoremap <leader>finish :MacroRplceQckFxWithQOneLine <cr>
 ```
 Plug 'marcopolo4k/vim-gbufs'
 
-" *** Gbufs - Search And Replace with Macro Q ***
-"         Multiple Files at a time
+" ************** Gbufs - Searching **************
 "
-" cdo - Macro Replace with Q - The QuickFix List - one line at a time
-"  macro q does NOT need the % in ':%s/TERM/REPLACE/g'
-"  macro q DOES need the TERM in ':s/TERM/REPLACE/g'
-"  This makes for the easiest previewing using '/'
-"
-" TODO Pick one or two freakin shortcuts to go with for each
-" [m]acro [r]eplace with simple macro [q]
-nnoremap <leader>mrq :MacroRplceQckFxWithQOneLine <cr>
-" for memorizing
-nnoremap <leader>cdoq :MacroRplceQckFxWithQOneLine <cr>
-" [q]uick[f]ix replace with [q]
-nnoremap <leader>qfq :MacroRplceQckFxWithQOneLine <cr>
-nnoremap <leader>fixq :MacroRplceQckFxWithQOneLine <cr>
-" if already previewed a bunch of changes, just need to [finish]
-nnoremap <leader>finish :MacroRplceQckFxWithQOneLine <cr>
-
-" Replace in all buffers instead of Quickfix list
-" [g]rep [buf]fers and replace with full-page macro [q]
-nnoremap <leader>gbufq :MacroRplceBuffersWithQEntireFile <cr>
-" [b]ufdo [r]eplace with macro [q]
-nnoremap <leader>brq :MacroRplceBuffersWithQEntireFile<cr>
-" for memorizing
-nnoremap <leader>bufdoq :MacroRplceBuffersWithQEntireFile<cr>
-
-" cfdo - Macro Replace with Q - The QuickFix List - entire file at a time
-"  Runs fastest on large files
-"   since QF list should have less files than Buffer List
-"  Macro requires '%' to search entire file at a time
-"  qq:%s/OLD/NEW/gENTERq
-"
-" [c]fdo [r]eplace with macro [q]
-nnoremap <leader>crq :MacroReplaceQuickFixWithQEntireFile<cr>
-" for memorizing
-nnoremap <leader>cfdoq :MacroReplaceQuickFixWithQEntireFile<cr>
-nnoremap <leader>bigq :MacroReplaceQuickFixWithQEntireFile<cr>
-
 " Search all open buffers -- for the last thing you search for --
 "  Maybe your last search has word boundaries, or not. Check with '/↑'
-" https://vim.fandom.com/wiki/Search_on_all_opened_buffers
 nnoremap <leader>gbufs :call BufdoVimgrepaddCopen()
 " 2nd option: Search and then open them all in horizontal window panes
 nnoremap <leader>gbufa :call BufdoVimgrepaddCopenAndOpenThemAll()
 " 3rd option: Type out a specific search term by command line
 "   :Gbufs SEARCH_TERM
-" for memorizing
+" to learn real vim, this helps to memorize
 nnoremap <leader>bufdovimgrep :call BufdoVimgrepaddCopen()
 
 " Search all open buffers -- for what's under the cursor --
@@ -138,10 +95,39 @@ nnoremap <leader>bufdovimgrep :call BufdoVimgrepaddCopen()
 "  Loads search result files into Quickfix List
 "  Does NOT save the search in last search reg
 nnoremap <leader>gbufc :call GrepBuffersForWordOnCursor("<C-R><C-W>")<CR>
+
+" *** Gbufs - Search And Replace with Macro Q ***
+"         Multiple Files at a time
+"
+" Replace in all buffers (does NOT use QuickFix list)
+" [g]rep [buf]fers and replace with full-page macro [q]
+nnoremap <leader>gbufq :MacroRplceBuffersWithQEntireFile <cr>
+" to learn real vim, this helps to memorize
+nnoremap <leader>bufdoq :MacroRplceBuffersWithQEntireFile<cr>
+
+" cfdo - Macro Replace with Q - The QuickFix List - entire file at a time
+"  Runs fastest on large files
+"   since QF list should have less files than Buffer List
+"  Macro requires '%' to search entire file at a time
+"  qq:%s/OLD/NEW/gENTERq
+"
+nnoremap <leader>bigq :MacroReplaceQuickFixWithQEntireFile<cr>
+" to learn real vim, this helps to memorize
+nnoremap <leader>cfdoq :MacroReplaceQuickFixWithQEntireFile<cr>
+
+" cdo - Macro Replace with Q - The QuickFix List - one line at a time
+"  macro q does NOT need the % in ':%s/TERM/REPLACE/g'
+"  macro q DOES need the TERM in ':s/TERM/REPLACE/g'
+"  This makes for the easiest previewing using '/'
+"
+" if already previewed a bunch of changes, just need to [finish]
+nnoremap <leader>finish :MacroRplceQckFxWithQOneLine <cr>
+" to learn real vim, this helps to memorize
+nnoremap <leader>cdoq :MacroRplceQckFxWithQOneLine <cr>
 ```
 
 ### HIGHLY RECOMMENDED additions for quicker searching:
-†‡ EITHER Install Plugin OR add a function to ~/.vimrc, choose one of these two:
+†‡ EITHER Install Plugin OR add a function to `~/.vimrc`, choose one of these two:
   * `VSetSearch`, see [this stack convo](https://stackoverflow.com/a/42776237/9009249)
   * Plug [dahu/SearchParty](https://github.com/dahu/SearchParty) (choose option 2 for the global var)
 
@@ -155,12 +141,12 @@ If you want to stop using this plugin, you can start with these mappings to help
 
 | Search And Replace Multiple Files | Mapping | Macro | Best For |
 | ----------- | ----------- | ----------- | ----------- |
-| Search And Replace all loaded files | `<leader>bufdoq` | `qq:%s/OLD/NEW/g<ENTER>q` | convenience - no QF needed |
-| `:bufdo execute "normal! @q" \| w` |
-| Search/Replace QuickFix files, line-by-line | `<leader>cdoq` | `qq:s//NEW/g<ENTER>q` | previewing a lot
-| `:cdo execute "normal! @q" \| w` |
-| Search/Replace QuickFix files, full page | `<leader>cfdoq` | `qq:%s/OLD/NEW/g<ENTER>q` | big files |
-| `:cfdo execute "normal! @q" \| w` |
+| Search And Replace all loaded files | `<leader>bufdoq` | `qq:%s/OLD/NEW/g<ENTER>q` | Convenience - the QuickFix |
+| `:bufdo execute "normal! @q" \| w` | (AKA gbufq) | | list is not needed |
+| Search/Replace QuickFix files, full page | `<leader>cfdoq` | `qq:%s/OLD/NEW/g<ENTER>q` | Big Files - because it runs only |
+| `:cfdo execute "normal! @q" \| w` | (AKA bigq) | | once per file found in QF list  |
+| Search/Replace QuickFix files, line-by-line | `<leader>cdoq` | `qq:s//NEW/g<ENTER>q` | Previewing a lot - use `n` and |
+| `:cdo execute "normal! @q" \| w` | (AKA finish) | | `@@` to test before doing all files |
 | Argdo runs on the original open file list | no macro yet | author of gbufs is lazy and | ? |
 | `:argdo execute "normal! @q" \| w` |  | hasn't needed this one yet |
 
@@ -236,7 +222,7 @@ Just searching and seeing something you might want to replace is common.  If you
 
 Sometimes files are big or there's lots of results on each page, and you need the search itself to be fast.  Instead of line by line, this searches each file in the Quickfix list, just once with one macro `q` (vs `finish` that executes the macro on every occurrance).
 
-1. Load buffers, let's choose `vim $( rg -l SEARCHTERM )`, with optional use of `rg` to preview which files you're getting. (rg is ripgrep, highly recommended)
+1. Load buffers, let's choose `vim $( rg -l SEARCHTERM )`, with optional use of `rg` to preview which files you're getting. ([rg](#recommended-pluginsadditions-complimentary-to-gbufs) is ripgrep)
 1. Record macro: `qq:%s/SEARCH/REPLACE/gq`
 1. `/SEARCH` on the first page, then preview the change: `@q`, then `n` and `@@` for more on the first page.
 1. Load Quickfix list, let's choose `\gbufs`
@@ -247,16 +233,18 @@ Sometimes files are big or there's lots of results on each page, and you need th
 I could add functions to specifically open or NOT open the QuickFix preview window for any of these.
 
 # Recommended Plugins instead of gbufs
-* [vim-esearch](vim-esearch) is way more powerful, since `gbufs` is just a couple simple maps.  But I haven't been able to get `esearch` to work on anything but vim9 yet, so for me at least, `gbufs` will be used on old vim8 systems. `gbufs` might also still be preferred if you want simple maps that help you memorize the full vim commands, or just don't want larger plugins.
-* If you use Neovim, `gbufs` won't work, but there's so many search and replace plugins (besides `esearch`, which is supposed to work on both):
+* [vim-esearch](vim-esearch) is way more powerful, since `gbufs` is mostly just some simple maps.  But I haven't been able to get `esearch` to work on anything but vim9 yet, so for me at least, `gbufs` will at least be used on old vim8 systems. `gbufs` might also still be preferred if you want simple maps that help you memorize the full vim commands, or just don't want larger plugins.
+* If you use Neovim, `gbufs` works fine, but there's so many search and replace plugins (besides `esearch`, which is supposed to work on both):
   * [nvim-spectre](https://github.com/nvim-pack/nvim-spectre)
   * [telescope](https://github.com/nvim-telescope/telescope.nvim)
   * [muren](https://github.com/AckslD/muren.nvim)
   * [replacer](https://github.com/gabrielpoca/replacer.nvim)
 
 # Recommended Plugins/Additions complimentary to gbufs
-* [Subversive](https://github.com/svermeulen/vim-subversive) vim plugin.  I have a bunch of mapping for that I almost put here for single-page search & replace.
-* [FZF](https://duckduckgo.com/?q=fzf+vim&ia=web) vim plugin
+* custom window navigation mappings in general
 * [ripgrep](https://duckduckgo.com/?q=ripgrep+vim&ia=web)
-* custom window navigation mappings
-* [dahu/SearchParty](https://github.com/dahu/SearchParty) - practically a requirement for `gbufs`
+* [dahu/SearchParty](https://github.com/dahu/SearchParty) - practically a requirement for `gbufs`, either this or VSetSearch
+* [vim-abolish](https://github.com/tpope/vim-abolish) - `:%Subvert/facility/building/g` gives a bunch of capitalization variations
+* [Subversive](https://github.com/svermeulen/vim-subversive) - for single-page search & replace, I have a bunch of mapping for that I almost put here. (I could add available upon request)
+* [FZF](https://duckduckgo.com/?q=fzf+vim&ia=web) vim plugin
+* Credit for searching - [fandom.com-Search_on_all_opened_buffers](https://vim.fandom.com/wiki/Search_on_all_opened_buffers)
