@@ -186,7 +186,7 @@ If you want to stop using this plugin, you can start with these mappings to help
 See additional installation instructions †‡
 
 ### † Alternative 1:
-  1. Highlight some text (`ctrl-v` then move cursor around everything to search for)
+  1. Highlight some text (`v`, then move cursor around everything to search for)
   1. `*`
   1. `<leader>gbufs`
 
