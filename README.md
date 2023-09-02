@@ -29,7 +29,7 @@ When searching and replacing files takes too long ([even when using rg](https://
 | ----------- | ----------- | ----------- | ----------- |
 | Search And Replace all loaded files | `<leader>gbufq` | `qq:%s/OLD/NEW/g<ENTER>q` | convenience - no QF needed |
 | Search/Replace QuickFix files, full page | `<leader>bigq` | `qq:%s/OLD/NEW/g<ENTER>q` | big files/lots of results |
-| Search/Replace QuickFix files, line-by-line | `<leader>finish` | `qq:s//NEW/g<ENTER>qj` | previewing a lot
+| Search/Replace QuickFix files, line-by-line | `<leader>finish` | `qq:s//NEW/g<ENTER>q` | previewing a lot
 
 ### Basic Universal Instructions
 
@@ -52,7 +52,6 @@ In this video:
   * `qq` - record macro named `q`
   * `:` - vim command mode
   * `s//set_/g` - it's empty, so search for last search term (`get_`), replace with `set_`, globally for each line
-  * `j` - move down one line, no need to repeat for multiple on same line
   * `q` - stop macro recording
 5. `n` around, `@q`, then `@@` to try the macro on different pages.
 6. `\finish` to run the macro on all results found.
@@ -158,7 +157,7 @@ If you want to stop using this plugin, you can start with these mappings to help
 | ----------- | ----------- | ----------- | ----------- |
 | Search And Replace all loaded files | `<leader>bufdoq` | `qq:%s/OLD/NEW/g<ENTER>q` | convenience - no QF needed |
 | `:bufdo execute "normal! @q" \| w` |
-| Search/Replace QuickFix files, line-by-line | `<leader>cdoq` | `qq:s//NEW/g<ENTER>qj` | previewing a lot
+| Search/Replace QuickFix files, line-by-line | `<leader>cdoq` | `qq:s//NEW/g<ENTER>q` | previewing a lot
 | `:cdo execute "normal! @q" \| w` |
 | Search/Replace QuickFix files, full page | `<leader>cfdoq` | `qq:%s/OLD/NEW/g<ENTER>q` | big files |
 | `:cfdo execute "normal! @q" \| w` |
@@ -182,7 +181,7 @@ If you want to stop using this plugin, you can start with these mappings to help
    * search with `/`, then `\gbufs` †
    * cursor on word, then `\gbufc` ‡
 
-4. Make a macro labelled `q` (`qq:s/OLD/NEW/g<ENTER>qj`)
+4. Make a macro labelled `q` (`qq:s/OLD/NEW/g<ENTER>q`)
    cdo doesn't need a `%` b/c it'll search each line individually
 
 5. The effects can be seen, file by file if desired, with vim commands: `@q` `:n` `/` etc
