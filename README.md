@@ -22,8 +22,8 @@ When searching and replacing files takes too long ([even when using rg](https://
 | Search Opened Files / Show Quickfix Window | Mapping | Note |
 | ----------- | ----------- | ----------- |
 | Search buffers for the last thing you searched for | `<leader>gbufs` | `/` to search in page |
-| Search buffers for what you have highlighted † | `<leader>gbufs` | Additional install |
 | Search buffers for whatever is under the **cursor** † | `<leader>gbufc` | Additional install |
+| Search buffers for what you have highlighted † | `<leader>gbufs` | Additional install |
 
 | Search And Replace Multiple Files - using Macro `q` | Mapping | Macro | Best For |
 | ----------- | ----------- | ----------- | ----------- |
