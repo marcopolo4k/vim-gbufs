@@ -24,7 +24,7 @@ When searching and replacing files takes too long ([even when using rg](https://
 | ----------- | ----------- | ----------- | ----------- |
 | Search And Replace all loaded files | `<leader>gbufq` | `qq:%s/OLD/NEW/g<ENTER>q` | convenience - no QF needed |
 | Search/Replace QuickFix files, full page | `<leader>bigq` | `qq:%s/OLD/NEW/g<ENTER>q` | big files/lots of results |
-| Search/Replace QuickFix files, line-by-line | `<leader>finish` | `qq:s//NEW/g<ENTER>q` | previewing a lot
+| Search/Replace QuickFix files, line-by-line | `<leader>qfq` | `qq:s//NEW/g<ENTER>q` | previewing a lot
 
 ### Basic Universal Instructions
 
@@ -35,9 +35,9 @@ When searching and replacing files takes too long ([even when using rg](https://
 
 There's more workflows, but these 3 are the most common I've found.
 
-### Example of the `finish` Workflow
+### Example of replacing from the QuickFix List `qfq` Workflow
 
-![Example of \finish](https://i.imgur.com/Dc9dVFO.gif)
+![Example of \qfq](https://i.imgur.com/Dc9dVFO.gif)
 
 In this video:
 1. Load a bunch of files into vim buffers using pattern: `vim $( find . )` ([rg](#recommended-pluginsadditions-complimentary-to-gbufs) is recommended instead of find)
@@ -49,13 +49,13 @@ In this video:
   * `s//set_/g` - it's empty, so search for last search term (`get_`), replace with `set_`, globally for each line
   * `q` - stop macro recording
 5. `n` around, `@q`, then `@@` to try the macro on different pages.
-6. `\finish` to run the macro on all results found.
+6. `\qfq` to run the macro on all results found.
 
 # Table of Contents
 1. [Installation](#installation)
 1. [Prerequisites](#prerequisites)
 1. [Learn real vim](#learn-real-vim)
-1. [Long Instructions for Workflow - `finish`](#long-instructions-for-finish-workflow-search-and-preview-a-lot-before-replacing-on-all-the-files)
+1. [Long Instructions for Workflow - `qfq`](#long-instructions-for-qfq-workflow-search-and-preview-a-lot-before-replacing-on-all-the-files)
 1. [More Workflows](#more-workflows)
    1. Simple search and view results - `gbufs`
    1. A lot of searching/replacing of big files - `bigq`
@@ -70,7 +70,7 @@ Plug 'marcopolo4k/vim-gbufs'
 nnoremap <leader>gbufs :call BufdoVimgrepaddCopen()
 nnoremap <leader>gbufq :MacroRplceBuffersWithQEntireFile <cr>
 nnoremap <leader>bigq :MacroReplaceQuickFixWithQEntireFile<cr>
-nnoremap <leader>finish :MacroRplceQckFxWithQOneLine <cr>
+nnoremap <leader>qfq :MacroRplceQckFxWithQOneLine <cr>
 ```
 
 ### Full vimrc: more aliases, functionality, and comment explanations:
@@ -120,7 +120,8 @@ nnoremap <leader>cfdoq :MacroReplaceQuickFixWithQEntireFile<cr>
 "  macro q DOES need the TERM in ':s/TERM/REPLACE/g'
 "  This makes for the easiest previewing using '/'
 "
-" if already previewed a bunch of changes, just need to [finish]
+" if already previewed a bunch of changes, just need to finish
+nnoremap <leader>qfq :MacroRplceQckFxWithQOneLine <cr>
 nnoremap <leader>finish :MacroRplceQckFxWithQOneLine <cr>
 " to learn real vim, this helps to memorize
 nnoremap <leader>cdoq :MacroRplceQckFxWithQOneLine <cr>
@@ -146,11 +147,11 @@ If you want to stop using this plugin, you can start with these mappings to help
 | Search/Replace QuickFix files, full page | `<leader>cfdoq` | `qq:%s/OLD/NEW/g<ENTER>q` | Big Files - because it runs only |
 | `:cfdo execute "normal! @q" \| w` | (AKA bigq) | | once per file found in QF list  |
 | Search/Replace QuickFix files, line-by-line | `<leader>cdoq` | `qq:s//NEW/g<ENTER>q` | Previewing a lot - use `n` and |
-| `:cdo execute "normal! @q" \| w` | (AKA finish) | | `@@` to test before doing all files |
+| `:cdo execute "normal! @q" \| w` | (AKA qfq) | | `@@` to test before doing all files |
 | Argdo runs on the original open file list | no macro yet | author of gbufs is lazy and | ? |
 | `:argdo execute "normal! @q" \| w` |  | hasn't needed this one yet |
 
-# Long Instructions for `finish` Workflow: Search and Preview a lot before replacing on all the files
+# Long Instructions for `qfq` Workflow: Search and Preview a lot before replacing on all the files
 
 1. Load files in buffers.
 
@@ -180,7 +181,7 @@ If you want to stop using this plugin, you can start with these mappings to help
    5. `:n` to see the next page.  Or better, use quickfix list to see all results. Repeat steps i & iii.
    6. Maybe look around your buffer list if there's any file that might be different.
 
-7. When happy, run the macro on the rest of the files: `<leader>finish`
+7. When happy, run macro `q` on the rest of the quickfix files: `<leader>qfq`
 
 ## †‡ Both these 2 alternatives require either one of two additional installations
 See additional installation instructions †‡
@@ -220,7 +221,7 @@ Just searching and seeing something you might want to replace is common.  If you
 
 ## A lot of searching/replacing of big files - `bigq`
 
-Sometimes files are big or there's lots of results on each page, and you need the search itself to be fast.  Instead of line by line, this searches each file in the Quickfix list, just once with one macro `q` (vs `finish` that executes the macro on every occurrance).
+Sometimes files are big or there's lots of results on each page, and you need the search itself to be fast.  Instead of line by line, this searches each file in the Quickfix list, just once with one macro `q` (vs `qfq` that executes the macro on every occurrance).
 
 1. Load buffers, let's choose `vim $( rg -l SEARCHTERM )`, with optional use of `rg` to preview which files you're getting. ([rg](#recommended-pluginsadditions-complimentary-to-gbufs) is ripgrep)
 1. Record macro: `qq:%s/SEARCH/REPLACE/gq`
